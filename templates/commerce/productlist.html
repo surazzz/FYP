@@ -8,15 +8,18 @@ List
     <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap -m-4">
             {% for object in object_list %}
-            <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-                <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260">
+            <div class="lg:w-1/5 md:w-1/2 p-4 w-full">
+                <a href="{{ object.slug }}">
+                    <div class="block relative h-48 rounded overflow-hidden">
+                        <img alt="ecommerce" class="object-relative object-center w-full h-full block" src="../media/{{ object.image }}">
+                    </div>
+                    <div class="mt-4">
+                        <h3>{{ object.category }}</h3>
+                        <p>{{ object.name }}</p>
+                        <p> &#8360 . {{ object.price }}</p>
+                        <p>Stock Available: {{ object.stock }}</p>
+                    </div>
                 </a>
-                <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-white title-font text-lg font-medium">{{ object.name }}</h2>
-                    <p class="mt-1">{{ object.price }}</p>
-                </div>
             </div>
             {% endfor %}
         </div>
