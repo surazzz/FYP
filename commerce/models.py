@@ -22,6 +22,7 @@ class Blog(models.Model):
      image= models.ImageField(upload_to= 'upload')
      name= models. CharField(max_length=128) 
      about= models.TextField()
+     date = models.DateField()
      slug= models.SlugField(max_length= 128, unique= True)
      def __str__(self):
         return self.name
