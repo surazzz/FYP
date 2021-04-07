@@ -27,7 +27,7 @@ class Blog(models.Model):
      def __str__(self):
         return self.name
 
-class addtocart(models.Model):
+class Addtocart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -36,9 +36,9 @@ class addtocart(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.item.name}"
 
-class cartdetail(models.Model):
+class Cartdetail(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    items = models.ManyToManyField(addtocart)
+    items = models.ManyToManyField(Addtocart)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)

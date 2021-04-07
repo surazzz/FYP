@@ -6,10 +6,12 @@ from django.conf import settings
 from commerce.forms import UserCreateForm
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login as log, logout
+from django.core.paginator import Paginator
 # Create your views here.
 
 class ProductListView(ListView):
      template_name='commerce/productList.html'
+     paginate_by=6 
      model= Product
 
 class ProductDetailView(DetailView):
@@ -22,6 +24,7 @@ class ProductDetailView(DetailView):
 
 class BlogListView(ListView):
      template_name='blog/blogs.html'
+     paginate_by=6
      model= Blog
 
 

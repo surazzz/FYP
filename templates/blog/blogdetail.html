@@ -1,7 +1,7 @@
 {% extends 'base.html '%}
 {% block title %}
 {% endblock %}
-{{ object.name }}
+
 {% block bodyblock %}
 <section class="text-gray-400 bg-gray-900 body-font overflow-hidden">
     <div class="container px-5 py-24 mx-auto">
@@ -9,13 +9,16 @@
             <div class="py-8 flex flex-wrap md:flex-nowrap">
                 <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                     <span class="font-semibold title-font text-white"></span>
-                    <span class="mt-1 text-gray-500 text-sm">Published Date: </br>
-                    {{ object.date }}</span>
+                    <span class="mt-1 text-gray-500 text-sm">
+                         <img src="/static/Images/calendar.png" width="22" height="22" alt="Logo">Published Date:<br>
+                        {{ object.date }}
+                    </span>
                 </div>
                 <div class="md:flex-grow">
-                    <h2 class="text-2xl font-medium text-white title-font mb-2">{{ object.name }}</h2>
-                    <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="../../media/{{ object.image }}">
-                    <p class="leading-relaxed">{{ object.about }}</p>
+                    <h2 class="text-2xl font-medium text-white title-font mb-2">{{ object.name }} :</h2><br>
+                    <p class="leading-relaxed">{{ object.about }}</p><br><br>
+                   <center> <img src="../../media/{{ object.image }}" height="900" width="900"></center>
+
                 </div>
                 </div>
     </div>

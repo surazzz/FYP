@@ -11,13 +11,6 @@
             padding-bottom: 50px;
             padding-left: 80px;
         }
-        .sign {
-            padding-top: 50px;
-            padding-right: 30px;
-            padding-bottom: 50px;
-            padding-left: 80px;
-        }
-     
     </style>
 </head>
 <body>
@@ -47,34 +40,36 @@
                     <path d="M5 12h14M12 5l7 7-7 7"></path>
                 </svg>
             </button>
+            <div class="sign1" style="width: 20px;">
 
-            <div class="test">
+            </div>
+
+            <div class="tes">
                 <img src="/static/Images/profile.png" width="40" height="40" alt="Logo">
                 <p>{{ user.get_username }}</p>
             </div>
-            
-            {% else %}
-            <div class="sign">
-                <button class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">
-                    <a href="{% url 'commerce:signup' %}">
-                        Sign up
-                    </a>
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-            </div>
-            
-                <button class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">
-                    <a href="{% url 'commerce:login' %}">
-                        log in
-                    </a>
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-           
 
+            {% else %}
+
+            <button class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">
+                <a href="{% url 'commerce:signup' %}">
+                    Sign up
+                </a>    
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+            <div class="sign" style="width: 7px;">
+
+            </div>
+            <button class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">
+                <a href="{% url 'commerce:login' %}">
+                    log in
+                </a>
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
         </div>
         {% endif %}
     </header>
@@ -93,57 +88,7 @@
                 <p class="mt-2 text-sm text-gray-500">A trusted gaming web app where you can buy your authentic Gaming products here.</p>
             </div>
             <div class="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
-                <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-                    <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-                    <nav class="list-none mb-10">
-                        <li>
-                            <a class="text-gray-400 hover:text-white">First Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Second Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Third Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Fourth Link</a>
-                        </li>
-                    </nav>
-                </div>
-                <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-                    <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-                    <nav class="list-none mb-10">
-                        <li>
-                            <a class="text-gray-400 hover:text-white">First Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Second Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Third Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Fourth Link</a>
-                        </li>
-                    </nav>
-                </div>
-                <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-                    <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
-                    <nav class="list-none mb-10">
-                        <li>
-                            <a class="text-gray-400 hover:text-white">First Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Second Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Third Link</a>
-                        </li>
-                        <li>
-                            <a class="text-gray-400 hover:text-white">Fourth Link</a>
-                        </li>
-                    </nav>
-                </div>
+               
                 <div class="lg:w-1/4 md:w-1/2 w-full px-4">
                     <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
                     <nav class="list-none mb-10">

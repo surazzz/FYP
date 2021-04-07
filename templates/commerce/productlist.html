@@ -4,6 +4,27 @@
 List
 {% endblock %}
 {% block bodyblock %}
+<head>
+    <style>
+        .paginationproduct {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .paginationproduct a {
+                color: white;
+                float: left;
+                padding: 10px 16px;
+                text-decoration: none;
+            }
+
+                .paginationproduct a:hover:not(.active) {
+                    background-color: #2471A3;
+                    border-radius: 5px;
+                }
+    </style>
+</head>
 <section class="text-gray-400 bg-gray-900 body-font">
     <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap -m-4">
@@ -23,6 +44,19 @@ List
             </div>
             {% endfor %}
         </div>
+    </div>
+    <div class="paginationproduct">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        <ul class="paginationproduct">
+            {% if page_obj.has_previous %}
+            <li><a href="?page=1">&laquo; First Page</a></li>
+            <li><a href="?page={{ page_obj.previous_page_number }}">Previous Page</a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">Next Page</a></li>
+            <li><a href="?page={{ page_obj.paginator.num_pages }}">Last Page</a></li>
+            {% endif %}
+        </ul>
     </div>
 </section>
 {% endblock %}
