@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}/Address{% endblock %}
+{% block bodyblock %}
+<h1>Shopping Cart of {{ user.get_username }}</h1>
+{% for s in data %}
+<h1>{{ s.item.name }}</h1>
+<p>{{ s.item.price }}</p>
+{% endfor %}
+{% endblock %}

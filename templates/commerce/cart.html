@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} | Cart {% endblock %}
+
+{% block bodyblock %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="number" name="quantity">
+    <input type="Submit" value="Submit">
+</form>
+{% endblock %}

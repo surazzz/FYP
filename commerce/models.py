@@ -36,9 +36,19 @@ class Addtocart(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.item.name}"
 
+
+class Address(models.Model):
+    user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    address_line=models.TextField()
+    phone_number=models.IntegerField()
+
+    def __str__(self):
+        return self.user
+
 class Cartdetail(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    items = models.ManyToManyField(Addtocart)
+    item = models.ForeignKey(Product, on_delete=models.CASCADE )
+    address=models.ForeignKey(Address, on_delete=models.CASCADE )
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
