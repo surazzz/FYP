@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from commerce.models import Product, Blog, Cartdetail
 from django.utils import timezone
@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login as log, logout
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import Addtocart
+from .models import Addtocart, Address, Contactus
 # Create your views here.
 
 class ProductListView(ListView):
@@ -26,10 +26,14 @@ class ProductDetailView(DetailView):
             username = request.user
             item = get_object_or_404(Product, slug = slug)
             quantity = request.POST.get('quantity')
-            s = Addtocart(user = username, item = item, quantity = quantity)
-            s.save()
-            cart_data =Addtocart.objects.filter(user=username)
-            return render(request, 'commerce/address.html', {'data': cart_data})
+            if Addtocart.objects.filter(item = item).exists():
+                obj = get_object_or_404(Addtocart, user =username, item=item)
+                obj.quantity = obj.quantity+ int(quantity)
+                obj.save()
+            else:
+                s = Addtocart(user = username, item = item, quantity = quantity)
+                s.save()
+            return redirect('commerce:address')
         return render(request, 'commerce/cart.html')
 
       def get_context_data(self, **kwargs):
@@ -42,7 +46,7 @@ class BlogListView(ListView):
      paginate_by=6
      model= Blog
 class CartListView(ListView):
-     template_name='commerce/address.html'
+     template_name='commerce/cart.html'
      model= Addtocart
 
 class BlogDetailView(DetailView): 
@@ -56,7 +60,7 @@ class BlogDetailView(DetailView):
 class UserCreateView(CreateView):
     form_class = UserCreateForm
     template_name = 'commerce/signup.html'
-    success_url=reverse_lazy('commerce:productlist')
+    success_url=reverse_lazy('commerce:productlist') 
 
 def login(request):
     username1=request.POST.get('username')
@@ -73,5 +77,42 @@ def logout_view(request):
     logout(request)
     return render(request, 'index.html')
 
+def address(request):
+    if request.POST.get('address-line') is not None:
+        username = request.user
+        address_line = request.POST.get('address-line')
+        phone_number = request.POST.get('phone-number')
 
-    
+        s = Address(user= username, address_line= address_line, phone_number= phone_number)
+        s.save()
+        return redirect('commerce:payment')
+
+
+    cart_data = Addtocart.objects.filter(user=request.user)
+    return render(request, 'commerce/address.html', {'data': cart_data})
+
+
+
+class ContactusListView(ListView):
+     template_name='commerce/contactus.html'
+     model= Contactus
+
+     def post(self, request, *args, **kwargs):
+         name=request.POST.get('name')
+         email=request.POST.get('email')
+         message=request.POST.get('message')
+         c= Contactus(name=name, email=email, message=message)
+         c.save()
+         return render(request, 'commerce/contactus.html')
+
+def payment(request):
+    if request.POST.get('payment_method') is not None:
+        username = request.user
+        item= Addtocart.objects.filter(user =username)
+        address =Address.objects.get(user =username)
+        s = Cartdetail(user =username, address = address, ordered_date =datetime.datetime.now(), ordered = True)
+        s.save()
+        s.item.set =item
+        s.save()
+        return redirect('commerce:productlist')
+    return render(request, 'commerce/payment.html')       

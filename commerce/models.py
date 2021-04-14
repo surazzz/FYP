@@ -43,11 +43,11 @@ class Address(models.Model):
     phone_number=models.IntegerField()
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 class Cartdetail(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    item = models.ForeignKey(Product, on_delete=models.CASCADE )
+    item = models.ManyToManyField(Addtocart)
     address=models.ForeignKey(Address, on_delete=models.CASCADE )
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
@@ -55,3 +55,11 @@ class Cartdetail(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Contactus(models.Model):
+    name= models. CharField(max_length=120) 
+    email = models.EmailField()
+    message= models.TextField()
+
+    def __str__(self):
+        return self.name

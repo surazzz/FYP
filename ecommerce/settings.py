@@ -16,6 +16,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR=os.path.join(BASE_DIR, 'templates')
+KHALTI_SECRET_KEY = "test_public_key_dc74e0fd57cb46cd93832aee0a390234"
+KHALTI_VERIFY_URL = "https://khalti.com/api/v2/payment/verify/"
 STATIC_DIR=os.path.join(BASE_DIR, 'static')
 CRISPY_TEMPLATE_PACK='bootstrap4'
 # Quick-start development settings - unsuitable for production
@@ -41,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'commerce',
     'crispy_forms',
+    'rest_framework',
+    'khalti',
     
 ]
 

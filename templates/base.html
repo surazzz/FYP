@@ -30,7 +30,7 @@
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:bloglist' %}">Blogs</a>
                 <a class="mr-5 hover:text-white">About US</a>
-                <a class="mr-5 hover:text-white">Contact US</a>
+                <a class="mr-5 hover:text-white"href="{% url 'commerce:contactus' %}">Contact US</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:cartlist' %}"> My Cart</a>
             </nav>
             {% else %}
@@ -39,7 +39,7 @@
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:bloglist' %}">Blogs</a>
                 <a class="mr-5 hover:text-white">About US</a>
-                <a class="mr-5 hover:text-white">Contact US</a>
+                <a class="mr-5 hover:text-white" href="{% url 'commerce:contactus' %}">Contact US</a>
             </nav>
             {% endif %}
 
@@ -104,16 +104,16 @@
                     <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
                     <nav class="list-none mb-10">
                         <li>
-                            <a class="text-gray-400 hover:text-white">First Link</a>
+                            <a class="text-gray-400 hover:text-white"  href="http://127.0.0.1:8000/">Home</a>
                         </li>
                         <li>
-                            <a class="text-gray-400 hover:text-white">Second Link</a>
+                            <a class="text-gray-400 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>
                         </li>
                         <li>
-                            <a class="text-gray-400 hover:text-white">Third Link</a>
+                            <a class="text-gray-400 hover:text-white" href="{% url 'commerce:bloglist' %}">Blogs</a>
                         </li>
                         <li>
-                            <a class="text-gray-400 hover:text-white">Fourth Link</a>
+                            <a class="text-gray-400 hover:text-white" href="{% url 'commerce:contactus' %}">Contact Us</a>
                         </li>
                     </nav>
                 </div>

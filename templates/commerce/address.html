@@ -1,9 +1,25 @@
 {% extends 'base.html' %}
-{% block title %}/Address{% endblock %}
+{% block title %}Address{% endblock %}
 {% block bodyblock %}
-<h1>Shopping Cart of {{ user.get_username }}</h1>
-{% for s in data %}
-<h1>{{ s.item.name }}</h1>
-<p>{{ s.item.price }}</p>
-{% endfor %}
+<div class="container">
+     <h1>Shopping Cart of {{ user.get_username }}</h1>
+      {% for s in data %}
+      <h1>{{ s.item.name }}</h1>
+      <p>{{ s.item.price }}</p>
+       {% endfor %}
+<section>
+    <form method="POST">
+        {% csrf_token %}
+        <label>
+            Address Line
+            <input type="text" name='address-line'>
+        </label>
+        <label>
+            Mobile Number
+            <input type="number" name='phone-number'>
+        </label>
+        <input type="submit" value="Proceed to checkout">
+    </form>
+</section>
+</div>
 {% endblock %}

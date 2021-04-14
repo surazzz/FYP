@@ -39,9 +39,9 @@
                     {% if user.is_authenticated %} 
                     <form method="POST"> 
                         {% csrf_token %}
-                        <label>
+                        <label class="quantity">
                             Quantity
-                            <input type="number" name="quantity" placeholder="Enter quantity">
+                            <input type="number" name="quantity" placeholder="Enter quantity" min="1" required="required">
                         </label>
                         <input type="submit" value="Add to Cart" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                     </form>

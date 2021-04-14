@@ -25,6 +25,7 @@ urlpatterns = [
     path('aboutus/',TemplateView.as_view(template_name='aboutus.html')),
     path('contactus/',TemplateView.as_view(template_name='contactus.html')),
     path('products/', include('commerce.urls')),
+    path('khalti/', include('khalti.urls')),
 
 ]
 if settings.DEBUG:
