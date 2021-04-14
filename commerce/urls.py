@@ -13,5 +13,5 @@ urlpatterns = [
     path('address/', address, name='address'),
     path('contactus/', ContactusListView.as_view(), name = 'contactus'), 
     path('payment/',payment , name='payment'),
-
+   
 ]

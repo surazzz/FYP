@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Addtocart, Address, Contactus
+import datetime
 # Create your views here.
 
 class ProductListView(ListView):
@@ -105,14 +106,20 @@ class ContactusListView(ListView):
          c.save()
          return render(request, 'commerce/contactus.html')
 
+class Payment(DetailView):
+    template_name ='commerce/payment.html'
+    model=Addtocart
+
 def payment(request):
     if request.POST.get('payment_method') is not None:
         username = request.user
         item= Addtocart.objects.filter(user =username)
-        address =Address.objects.get(user =username)
+        address= Address.objects.filter(user=username).order_by('-id')[0]
+        #address =Address.objects.get(user =username)
         s = Cartdetail(user =username, address = address, ordered_date =datetime.datetime.now(), ordered = True)
         s.save()
         s.item.set =item
         s.save()
         return redirect('commerce:productlist')
-    return render(request, 'commerce/payment.html')       
+    return render(request, 'commerce/payment.html') 
+    

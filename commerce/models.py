@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+
 # Create your models here.
 class Category(models.Model):
      name= models.CharField(max_length= 128)
@@ -50,7 +51,7 @@ class Cartdetail(models.Model):
     item = models.ManyToManyField(Addtocart)
     address=models.ForeignKey(Address, on_delete=models.CASCADE )
     start_date = models.DateTimeField(auto_now_add=True)
-    ordered_date = models.DateTimeField()
+    ordered_date = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
 
     def __str__(self):
