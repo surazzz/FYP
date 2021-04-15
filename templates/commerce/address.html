@@ -1,25 +1,38 @@
 {% extends 'base.html' %}
 {% block title %}Address{% endblock %}
 {% block bodyblock %}
-<div class="container">
-     <h1>Shopping Cart of {{ user.get_username }}</h1>
-      {% for s in data %}
-      <h1>{{ s.item.name }}</h1>
-      <p>{{ s.item.price }}</p>
-       {% endfor %}
-<section>
-    <form method="POST">
-        {% csrf_token %}
-        <label>
-            Address Line
-            <input type="text" name='address-line'>
-        </label>
-        <label>
-            Mobile Number
-            <input type="number" name='phone-number'>
-        </label>
-        <input type="submit" value="Proceed to checkout">
-    </form>
+<section class="text-gray-400 bg-gray-900 body-font">
+    <div class="container px-5 py-24 mx-auto">
+        {% for s in data %}
+        <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6">
+            <div class="p-4 md:w-1/3 flex">
+                <div class="flex-grow pl-6">
+                    <div class="block relative h-48 rounded overflow-hidden">
+                        <img alt="ecommerce" class="object-relative object-center w-full h-full block" src="/media/{{ s.item.image }}">
+                    </div>
+                    <h2 class="text-white text-lg title-font font-medium mb-2">{{ s.item.name }}</h2>
+                    <p class="leading-relaxed text-base">&#8360 . {{ s.item.price }}</p>                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}<br><br> <br>
+        <section>
+            <form method="POST">
+                {% csrf_token %}
+                <label>
+                    Address Line:-
+                    <input type="text" name='address-line' required="required">
+                </label>
+                <label>
+                    Mobile Number:-
+                    <input type="number" name='phone-number' required="required">
+                </label>
+                <input type="submit" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" value="Proceed to checkout">
+            </form>
+        </section>
+    </div>
+    
 </section>
-</div>
+
 {% endblock %}
+

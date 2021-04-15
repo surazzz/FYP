@@ -26,10 +26,16 @@ class ProductDetailView(DetailView):
         if request.POST.get('quantity')!= None :
             username = request.user
             item = get_object_or_404(Product, slug = slug)
+            total: Product.objects.get('price') * Addtocart.objects.get('quantity')
+            
+            #item.price=Product.objects.get('price') * Addtocart.objects.get('quantity')
+            #item.save()            
+            #amount=Product.objects.get('price') * Addtocart.objects.get('quantity')
+            #item.price=item.price* Addtocart.objects.get('quantity')
             quantity = request.POST.get('quantity')
             if Addtocart.objects.filter(item = item).exists():
                 obj = get_object_or_404(Addtocart, user =username, item=item)
-                obj.quantity = obj.quantity+ int(quantity)
+                obj.quantity = obj.quantity + int(quantity)                           
                 obj.save()
             else:
                 s = Addtocart(user = username, item = item, quantity = quantity)
@@ -49,6 +55,11 @@ class BlogListView(ListView):
 class CartListView(ListView):
      template_name='commerce/cart.html'
      model= Addtocart
+     paginate_by=6 
+
+class About(ListView):
+     template_name='commerce/about.html'
+
 
 class BlogDetailView(DetailView): 
       template_name='blog/blogdetail.html'
@@ -115,7 +126,6 @@ def payment(request):
         username = request.user
         item= Addtocart.objects.filter(user =username)
         address= Address.objects.filter(user=username).order_by('-id')[0]
-        #address =Address.objects.get(user =username)
         s = Cartdetail(user =username, address = address, ordered_date =datetime.datetime.now(), ordered = True)
         s.save()
         s.item.set =item

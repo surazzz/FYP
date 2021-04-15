@@ -6,9 +6,12 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     {% block head_section %}
     {% endblock %}
+    {% block header %}
 
-    
-    
+    {% endblock %}
+
+
+
     <style>
         .test {
             padding-top: 50px;
@@ -34,8 +37,8 @@
                 <a class="mr-5 hover:text-white" href="http://127.0.0.1:8000/">Home</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:bloglist' %}">Blogs</a>
-                <a class="mr-5 hover:text-white">About US</a>
-                <a class="mr-5 hover:text-white"href="{% url 'commerce:contactus' %}">Contact US</a>
+                <a class="mr-5 hover:text-white" href="{% url 'commerce:about' %}">About US</a>
+                <a class="mr-5 hover:text-white" href="{% url 'commerce:contactus' %}">Contact US</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:cartlist' %}"> My Cart</a>
             </nav>
             {% else %}
@@ -43,7 +46,7 @@
                 <a class="mr-5 hover:text-white" href="http://127.0.0.1:8000/">Home</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:bloglist' %}">Blogs</a>
-                <a class="mr-5 hover:text-white">About US</a>
+                <a class="mr-5 hover:text-white" href="{% url 'commerce:about' %}">About US</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:contactus' %}">Contact US</a>
             </nav>
             {% endif %}
