@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from commerce.models import Product, Blog, Cartdetail
 from django.utils import timezone
 from django.conf import settings
@@ -11,11 +11,15 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Addtocart, Address, Contactus
 import datetime
+import requests
+from django.core.mail import send_mail
+from django.db.models import Q
+from django.contrib import messages
 # Create your views here.
 
 class ProductListView(ListView):
      template_name='commerce/productList.html'
-     paginate_by=6 
+     paginate_by=6
      model= Product
 
 class ProductDetailView(DetailView):
@@ -25,13 +29,7 @@ class ProductDetailView(DetailView):
       def post(self, request, slug, *args, **kwargs):
         if request.POST.get('quantity')!= None :
             username = request.user
-            item = get_object_or_404(Product, slug = slug)
-            total: Product.objects.get('price') * Addtocart.objects.get('quantity')
-            
-            #item.price=Product.objects.get('price') * Addtocart.objects.get('quantity')
-            #item.save()            
-            #amount=Product.objects.get('price') * Addtocart.objects.get('quantity')
-            #item.price=item.price* Addtocart.objects.get('quantity')
+            item = get_object_or_404(Product, slug = slug)          
             quantity = request.POST.get('quantity')
             if Addtocart.objects.filter(item = item).exists():
                 obj = get_object_or_404(Addtocart, user =username, item=item)
@@ -57,9 +55,8 @@ class CartListView(ListView):
      model= Addtocart
      paginate_by=6 
 
-class About(ListView):
-     template_name='commerce/about.html'
-
+class About(TemplateView):
+     template_name='about.html'
 
 class BlogDetailView(DetailView): 
       template_name='blog/blogdetail.html'
@@ -94,12 +91,9 @@ def address(request):
         username = request.user
         address_line = request.POST.get('address-line')
         phone_number = request.POST.get('phone-number')
-
         s = Address(user= username, address_line= address_line, phone_number= phone_number)
         s.save()
         return redirect('commerce:payment')
-
-
     cart_data = Addtocart.objects.filter(user=request.user)
     return render(request, 'commerce/address.html', {'data': cart_data})
 
@@ -122,14 +116,74 @@ class Payment(DetailView):
     model=Addtocart
 
 def payment(request):
-    if request.POST.get('payment_method') is not None:
+    total=0
+    for x in Addtocart.objects.filter(user=request.user):     
+        total=total+x.item.price*x.quantity
+    if request.POST.get('payment_method') =="red":
         username = request.user
         item= Addtocart.objects.filter(user =username)
         address= Address.objects.filter(user=username).order_by('-id')[0]
-        s = Cartdetail(user =username, address = address, ordered_date =datetime.datetime.now(), ordered = True)
+       #khalti payment will take input in paisa.
+        s = Cartdetail(user =username, address = address, ordered_date =datetime.datetime.now(), ordered = True, total=total*100, payment_choices='COD')
         s.save()
         s.item.set =item
         s.save()
+        send_mail(
+            'Ordered Successfully. Thank you for ordering products keep shopping.',
+            'You have successfully purchased a Product.',
+            settings.EMAIL_HOST_USER,
+            [request.user.email],
+            fail_silently=True,
+        )
+        return redirect('commerce:productlist') 
+    elif request.POST.get('payment_method') =="blue":
+        token = request.POST.get('token')
+        url = "https://khalti.com/api/v2/payment/verify/"
+        payload = {
+        "token": token,
+        "amount": 1000
+        }
+        headers = {
+        "Authorization": "Key live_secret_key_970b77a215224e0482282023a35abe2a"
+        }
+        response = requests.post(url, payload, headers = headers)
+        username = request.user
+        item =Addtocart.objects.filter(user =username)
+        address =Address.objects.filter(user =username).order_by('-id')[0]
+        s = Cartdetail(user =username, address = address, ordered_date =datetime.datetime.now(), ordered = True, total =total*100, payment_choices= 'ONLINE', payment = True)
+        s.save()
+        s.item.set =item
+        s.save()
+        send_mail(
+            'Ordered Successfully. Thank you for ordering products keep shopping.',
+            'You have successfully purchased a Product.',
+            settings.EMAIL_HOST_USER,
+            [request.user.email],
+            fail_silently=True,
+        )
         return redirect('commerce:productlist')
-    return render(request, 'commerce/payment.html') 
+    return render(request, 'commerce/payment.html',{'data':total*100}) 
     
+    
+def search(request):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+        submitbutton= request.GET.get('submit')
+
+        if query is not None:
+            lookups= Q(name__icontains=query) |  Q(about__icontains=query )
+
+            results= Product.objects.filter(lookups).distinct()
+
+            context={'results': results,
+                     'submitbutton': submitbutton}
+            return render(request, 'commerce/productlist.html', context)
+
+        else:
+            return render(request, 'commerce/productlist.html')
+
+    else:
+        return render(request, 'commerce/productlist.html')
+
+  
+   

@@ -1,5 +1,5 @@
 from django.urls import path
-from commerce.views import ProductListView, ProductDetailView, BlogListView,CartListView, BlogDetailView, UserCreateView, login, logout_view, address, ContactusListView, payment, About
+from commerce.views import ProductListView, ProductDetailView, BlogListView,CartListView, BlogDetailView, UserCreateView, login, logout_view, address, ContactusListView, payment
 app_name= "commerce"
 urlpatterns = [
     path('', ProductListView.as_view(), name = 'productlist'),
@@ -13,6 +13,6 @@ urlpatterns = [
     path('address/', address, name='address'),
     path('contactus/', ContactusListView.as_view(), name = 'contactus'), 
     path('payment/',payment , name='payment'),
-    path('aboutus/', About, name = 'about'), 
+   
    
 ]

@@ -1,84 +1,92 @@
 {% extends 'base.html' %}
-{% block title %} | Cart {% endblock %}
-{% block bodyblock %}
-<head>
-    <meta charset="utf-8">
-    <style>
-        .box {
-            color: #fff;
-            padding: 20px;
-            display: none;
-            margin-top: 20px;
-        }
-    </style>
-    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('input[type="radio"]').click(function () {
-                var inputValue = $(this).attr("value");
-                var targetBox = $("." + inputValue);
-                $(".box").not(targetBox).hide();
-                $(targetBox).show();
-            });
+{% block title %} | Payment method{% endblock %}
+{% block head_section %}
+<meta charset="utf-8">
+<style>
+    .box {
+        color: #fff;
+        padding: 20px;
+        display: none;
+        margin-top: 20px;
+    }
+</style>
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input[type="radio"]').click(function () {
+            var inputValue = $(this).attr("value");
+            var targetBox = $("." + inputValue);
+            $(".box").not(targetBox).hide();
+            $(targetBox).show();
         });
-    </script>
-</head>
-<body>
-    <h1><strong>Payment methods Available</strong></h1>
-    <div>
-        <section class="container">
-            <form method="POST">
-                {% csrf_token %}
-                <label><input type="radio" name="payment_method" value="red"> Cash on delivery</label>
-                <label><input type="radio" name="payment_method" value="blue"> Khalti</label>
-                <div class="red box"><input type="submit" value="Cash on Delivery" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"></div>
+    });
+</script>
+{% endblock %}
+{% block bodyblock %}
+<section class="text-gray-400 bg-gray-900 body-font">
+    <div class="container px-5 py-24 mx-auto flex flex-wrap">
+       
+        <div>
+            <section class="container">
+                <form method="POST" id="my-form">
+                    {% csrf_token %}
+                    <label><input type="radio" name="payment_method" value="red"> Cash on delivery</label>
+                    <label><input type="radio" name="payment_method" value="blue"> Khalti</label>
+                    <input type="hidden" id="token" name="token">
+                    <div class="red box"><input type="submit" value="Cash on Delivery" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"></div>
 
-                <!-- Place this where you need payment button -->
+                    <!-- Place this where you need payment button -->
 
-            </form>
+                </form>
 
-        </section>
-        <div class="blue box">
-            <button id="payment-button" class="flex ml-left text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded transition duration-500 ease-in-out bg-blue-600 hover:bg-red-600 transform hover:-translate-y-1 hover:scale-110 ...">Pay with Khalti</button>
-        </div>
-        <!-- Place this where you need payment button -->
-        <!-- Paste this code anywhere in you body tag -->
-        <script>
-            var config = {
-                // replace the publicKey with yours
-                "publicKey": "test_public_key_dc74e0fd57cb46cd93832aee0a390234",
-                "productIdentity": "1234567890",
-                "productName": "Dragon",
-                "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
-                "paymentPreference": [
-                    "KHALTI",
-                    "EBANKING",
-                    "MOBILE_BANKING",
-                    "CONNECT_IPS",
-                    "SCT",
-                ],
-                "eventHandler": {
-                    onSuccess(payload) {
-                        // hit merchant api for initiating verfication
-                        console.log(payload);
-                    },
-                    onError(error) {
-                        console.log(error);
-                    },
-                    onClose() {
-                        console.log('widget is closing');
+            </section>
+            <div class="blue box">
+                <button id="payment-button" class="flex ml-left text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded transition duration-500 ease-in-out bg-blue-600 hover:bg-red-600 transform hover:-translate-y-1 hover:scale-110 ...">Pay with Khalti</button>
+            </div>
+            <!-- Place this where you need payment button -->
+            <!-- Paste this code anywhere in you body tag -->
+            <script>
+                    var config = {
+                        // replace the publicKey with yours
+                        "publicKey": "live_public_key_ee624fa4358a4f3093b37235a22bcaad",
+                        "productIdentity": "1234567890",
+                        "productName": "Dragon",
+                        "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+                        "paymentPreference": [
+                            "KHALTI",
+                            "EBANKING",
+                            "MOBILE_BANKING",
+                            "CONNECT_IPS",
+                            "SCT",
+                        ],
+                        "eventHandler": {
+                            onSuccess(payload) {
+                                // hit merchant api for initiating verfication
+                                console.log(payload);
+                                console.log(payload['token']);
+                                document.getElementById("token").value = payload['token'];
+                                document.getElementById("my-form").submit();
+
+                            },
+                            onError(error) {
+                                console.log(error);
+                            },
+                            onClose() {
+                                console.log('widget is closing');
+                            }
+                        }
+                    };
+
+                    var checkout = new KhaltiCheckout(config);
+                    var btn = document.getElementById("payment-button");
+                    btn.onclick = function () {
+                        // minimum transaction amount must be 10, i.e 1000 in paisa.
+                        checkout.show({ amount: 1000 } );
                     }
-                }
-            };
-
-            var checkout = new KhaltiCheckout(config);
-            var btn = document.getElementById("payment-button");
-            btn.onclick = function () {
-                // minimum transaction amount must be 10, i.e 1000 in paisa.
-                checkout.show({ amount: 2000 });
-            }
-        </script>
-        <!-- Paste this code anywhere in you body tag -->
-    </div>
+            </script>
+            <!-- Paste this code anywhere in you body tag -->
+        </div>
+        </div>
+</section>
     {% endblock %}

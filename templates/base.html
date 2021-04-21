@@ -7,7 +7,6 @@
     {% block head_section %}
     {% endblock %}
     {% block header %}
-
     {% endblock %}
 
 
@@ -29,24 +28,25 @@
     <header class="text-gray-400 bg-gray-900 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-                <img src="/static/Images/logo.png" width="150" height="150" alt="Logo">
-                <span class="ml-3 text-xl">Gaming Samaagri</span>
-            </a>
+                <a href="{% url 'home' %}"><img src="/static/Images/logoop.png" width="150" height="150" alt="Logo"></a>
+                <span class="ml-3 text-xl" href="{% url 'home' %}">Gaming Samaagri</span>
+                
+            
             {% if user.is_authenticated %}
             <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-                <a class="mr-5 hover:text-white" href="http://127.0.0.1:8000/">Home</a>
+                <a class="mr-5 hover:text-white" href="{% url 'home' %}">Home</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:bloglist' %}">Blogs</a>
-                <a class="mr-5 hover:text-white" href="{% url 'commerce:about' %}">About US</a>
+                <a class="mr-5 hover:text-white" href="{% url 'about' %}">About US</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:contactus' %}">Contact US</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:cartlist' %}"> My Cart</a>
             </nav>
             {% else %}
             <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-                <a class="mr-5 hover:text-white" href="http://127.0.0.1:8000/">Home</a>
+                <a class="mr-5 hover:text-white" href="{% url 'home' %}">Home</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:bloglist' %}">Blogs</a>
-                <a class="mr-5 hover:text-white" href="{% url 'commerce:about' %}">About US</a>
+                <a class="mr-5 hover:text-white" href="{% url 'about' %}">About US</a>
                 <a class="mr-5 hover:text-white" href="{% url 'commerce:contactus' %}">Contact US</a>
             </nav>
             {% endif %}
@@ -99,11 +99,11 @@
         <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
             <div class="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10">
                 <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                    </svg>
-                    <span class="ml-3 text-xl">Gaming Samaagri</span>
-                </a>
+                    <a href="{% url 'home' %}">
+                        <img src="/static/Images/logoop.png" width="80" height="80" alt="Logo">
+                        </a>
+                        <span class="ml-3 text-xl">Gaming Samaagri</span>
+                    </a>
                 <p class="mt-2 text-sm text-gray-500">A trusted gaming web app where you can buy your authentic Gaming products here.</p>
             </div>
             <div class="flex-grow flex flex-wrap md:pr-20 -mb-10 md:text-left text-center order-first">
@@ -112,7 +112,7 @@
                     <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">CATEGORIES</h2>
                     <nav class="list-none mb-10">
                         <li>
-                            <a class="text-gray-400 hover:text-white"  href="http://127.0.0.1:8000/">Home</a>
+                            <a class="text-gray-400 hover:text-white"  href="{% url 'home' %}">Home</a>
                         </li>
                         <li>
                             <a class="text-gray-400 hover:text-white" href="{% url 'commerce:productlist' %}">View Products</a>

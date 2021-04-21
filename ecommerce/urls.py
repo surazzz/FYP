@@ -19,14 +19,15 @@ from django.views.generic import TemplateView
 from commerce import urls
 from . import settings
 from django.conf.urls.static import static
+from commerce.views import About ,search
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',TemplateView.as_view(template_name='index.html')),
-    path('aboutus/',TemplateView.as_view(template_name='aboutus.html')),
-    path('contactus/',TemplateView.as_view(template_name='contactus.html')),
+    path('',TemplateView.as_view(template_name='index.html'), name='home'),
+    path('aboutus/',TemplateView.as_view(template_name='about.html'), name='about'),
     path('products/', include('commerce.urls')),
     path('khalti/', include('khalti.urls')),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
+    path('search', search, name = 'searchposts'),
 
 ]
 if settings.DEBUG:
