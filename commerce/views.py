@@ -185,5 +185,23 @@ def search(request):
     else:
         return render(request, 'commerce/productlist.html')
 
-  
+def searchblog(request):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+        submitbutton= request.GET.get('submit')
+
+        if query is not None:
+            lookups= Q(name__icontains=query) |  Q(about__icontains=query )
+
+            results= Blog.objects.filter(lookups).distinct()
+
+            context={'results': results,
+                     'submitbutton': submitbutton}
+            return render(request, 'blog/blogs.html', context)
+
+        else:
+            return render(request, 'blog/blogs.html')
+
+    else:
+        return render(request, 'blog/blogs.html') 
    

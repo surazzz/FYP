@@ -24,6 +24,34 @@ Blogs
     </style>
 </head>
 <section class="text-gray-400 bg-gray-900 body-font">
+
+
+    <form action="{% url 'searchblo' %}" method="GET" value="{{request.GET.q}}">
+        <center><input type="text" name="q" value="{{request.GET.q}}" placeholder="Search Blogs.........." class=" bg-gray-800 rounded border border-gray-700 focus:border-red-500 focus:ring-2 focus:ring-red-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" /> </center><br>
+        <center> <input type="submit" name="submit" value="Search" class="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg" /></center>
+    </form><br />
+    {% if submitbutton == 'Search' and request.GET.q != '' %} {% if results %}
+    <h1>Results for {{ request.GET.q }}</h1>
+    <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-wrap -m-4">
+            {% for result in results %}
+            <div class="lg:w-1/5 md:w-1/2 p-4 w-full">
+                <a href="{{ result.slug }}">
+                    <div class="block relative h-48 rounded overflow-hidden">
+                        <img alt="ecommerce" class="object-relative object-center w-full h-full block" src="../media/{{ result.image }}">
+                    </div>
+                    <div class="mt-4">
+                        <h3>{{ result.category }}</h3>
+                        <p>{{ result.name }}</p>
+                        <p> &#8360 . {{ result.price }}</p>
+                        <p>Stock Available: {{ result.stock }}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %} No search results for this query {% endif %} {% endif %}
     <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap -m-4">
             {% for object in object_list %}

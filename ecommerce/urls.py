@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 from commerce import urls
 from . import settings
 from django.conf.urls.static import static
-from commerce.views import About ,search
+from commerce.views import About ,search, searchblog
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',TemplateView.as_view(template_name='index.html'), name='home'),
@@ -27,7 +27,8 @@ urlpatterns = [
     path('products/', include('commerce.urls')),
     path('khalti/', include('khalti.urls')),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
-    path('search', search, name = 'searchposts'),
+    path('search', search, name = 'searchproduct'),
+    path('searchbl', searchblog, name = 'searchblo'),
 
 ]
 if settings.DEBUG:
